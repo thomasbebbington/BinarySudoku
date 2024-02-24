@@ -53,7 +53,7 @@ void main(){
 			}
 		}
 
-		if(IsMouseButtonDown(MOUSE_BUTTON_LEFT)){
+		if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
 			Vector2 mpos = GetMousePosition();
 
 			float xpos = mpos.x;
