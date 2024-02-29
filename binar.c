@@ -71,7 +71,6 @@ char checkDone(int grid[rows][columns]){
 				count = 1;
 			}
 			if(count > 2){
-				printf("Row %d has too many consecutive colours\n", i);
 				return 0;
 			}
 		}
@@ -90,7 +89,6 @@ char checkDone(int grid[rows][columns]){
 				count = 1;
 			}
 			if(count > 2){
-				printf("Column %d has too many consecutive colours\n", i);
 				return 0;
 			}
 		}
@@ -104,7 +102,6 @@ char checkDone(int grid[rows][columns]){
 					break;
 				}
 				if(k == columns - 1){
-					printf("Column %d = Column %d\n", i, j);
 					return 0;
 				}
 			}
@@ -119,7 +116,6 @@ char checkDone(int grid[rows][columns]){
 					break;
 				}
 				if(k == columns - 1){
-					printf("Row %d = Row %d\n", i, j);
 					return 0;
 				}
 			}
@@ -138,13 +134,6 @@ void main(){
 	
 	int filledSquares = 0;
 
-	for(int i = 0; i < rows; i++){
-		for(int j = 0; j < columns; j++){
-			printf("%d", grid[i][j]);
-		}
-		printf("\n");
-	}
-
 	InitWindow(width, height, "Binary Sudoku");
 	SetTargetFPS(60);
 
@@ -152,12 +141,20 @@ void main(){
 		BeginDrawing();
 		ClearBackground(BLACK);
 		drawGameGrid((int*) &grid);
-		DrawFPS(10,10);
+		//DrawFPS(10,10);
+
+		char timebuff[10];
+		snprintf(timebuff, sizeof(char)*6, "%f", GetTime());
+		DrawText(timebuff, 10, 10, 20, DARKGREEN);
+		
 
 		if(filledSquares == rows * columns){
-			DrawText("FINISHED???", 400, 400, 30, DARKBLUE);
+			if(checkDone(grid)){
+				DrawText("VALID", width/2, height/2, 30, RAYWHITE);
 
-			printf("%d\n", checkDone(grid));
+			} else {
+				DrawText("INVALID", width/2, height/2, 30, RAYWHITE);
+			}		
 		}
 
 		if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
@@ -184,15 +181,6 @@ void main(){
 				grid[x][y] = 0;
 				filledSquares--;
 			}
-
-			char xb[5];
-			char yb[5];
-
-			sprintf(xb, "%d", x);
-			sprintf(yb, "%d", y);
-
-			DrawText(xb, 100, 100, 20, DARKGREEN);
-			DrawText(yb, 200, 100, 20, DARKGREEN);
 		}
 
 		EndDrawing();
