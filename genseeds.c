@@ -2,7 +2,12 @@
 #include<stdio.h>
 #include"binar.h"
 
-void writegrid(FILE seeds, int grid[6][6]){
+void writegrid(FILE* seeds, int grid[6][6]){
+	for(int i = 0; i < 6; i++){
+		for(int j = 0; j < 6; j++){
+			fprintf(seeds, "%c", (char) grid[i][j]);
+		}
+	}
 
 }
 
@@ -26,7 +31,7 @@ void main(){
 
 	int grid[6][6] = {0};
 	
-	FILE seeds = fopen("seeds", "w");
+	FILE* seeds = fopen("seeds", "w");
 
 	for(int q = 0; q < 14; q++){
 		memcpy(&grid[0][0], &validrows[q], sizeof(int)*6);
@@ -42,12 +47,12 @@ void main(){
 							memcpy(&grid[5][0], &validrows[y], sizeof(int)*6);
 							//printGrid(grid);
 							char valid = checkDone(grid);
-
+							
 							countvalid += valid;
 							if(valid){
 								printGrid(grid);
 								printf("%d\n", countvalid);
-
+								writegrid(seeds, grid);
 							}
 						}
 					}
@@ -56,4 +61,5 @@ void main(){
 		}
 	}
 	printf("%d\n", countvalid);
+	fclose(seeds);
 }

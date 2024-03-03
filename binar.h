@@ -1,4 +1,5 @@
 #include<stdlib.h>
+#include<stdio.h>
 #define rows 6
 #define columns 6
 
